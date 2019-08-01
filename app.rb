@@ -51,6 +51,23 @@ post '/visit' do
   @client_phone = params[:client_phone]
   @date_time = params[:date_time]
   @color = params[:color]
+
+  hh = {:client_name => "You did't enter your name",
+        :client_phone => "You did't enter your phone",
+        :date_time => "Wrong date and time"
+  }
+
+  hh.each do |key, value|
+    if params[key] == ''
+      @error = hh[key]
+    
+    end
+  end
+
+  if @error
+    return erb :visit
+    
+  end
   
   @message = "Dear #{@client_name}, we wait you at #{@date_time}, your color #{@color}."
 
