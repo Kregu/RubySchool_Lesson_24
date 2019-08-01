@@ -59,9 +59,9 @@ post '/visit' do
 
   @error = hh.select {|key,_| params[key] == ""}.values.join(", ")
 
-  if @error
-    return erb :visit
-  end
+  # if @error.strip != ''
+  #   return erb :visit
+  # end
   
   @message = "Dear #{@client_name}, we wait you at #{@date_time}, your color #{@color}."
 
