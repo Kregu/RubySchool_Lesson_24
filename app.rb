@@ -59,9 +59,9 @@ post '/visit' do
 
   @error = hh.select {|key,_| params[key] == ""}.values.join(", ")
 
-  # if @error.strip != ''
-  #   return erb :visit
-  # end
+  unless @error == ""
+    return erb :visit
+  end
   
   @message = "Dear #{@client_name}, we wait you at #{@date_time}, your color #{@color}."
 
@@ -77,6 +77,16 @@ end
 post '/contacts' do
   @client_email = params[:client_email]
   @client_message = params[:client_message]
+
+  cc = {:client_email => "You did't enter your email",
+        :client_message => "You did't enter your message"}
+
+  @error = cc.select{|key,_| params[key] == ""}.values.join(", ")
+
+  unless @error == ""
+    return erb :contacts
+  end
+
 
   f = File.open './public/contacts.txt', 'a'
   f.write "client email: #{@client_email}\nmessage:\n#{@client_message}\n"
