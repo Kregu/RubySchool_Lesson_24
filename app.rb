@@ -29,6 +29,7 @@ get '/about' do
 end
 
 get '/visit' do
+  @headresser = "Any headresser"
   erb :visit
 end
 
@@ -63,7 +64,7 @@ post '/visit' do
     return erb :visit
   end
   
-  @message = "Dear #{@client_name}, we wait you at #{@date_time}, your color #{@color}."
+  @message = "Dear #{@client_name}, we wait you at #{@date_time}, your color #{@color}, your headresser #{@headresser}."
 
 
   f = File.open './public/users.txt', 'a'
