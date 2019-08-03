@@ -1,6 +1,8 @@
 require 'rubygems'
 require 'sinatra'
-require "sinatra/reloader" if development?
+require 'sinatra/reloader' if development?
+require 'pony'
+require 'yaml'
 
 configure do
   enable :sessions
@@ -93,8 +95,34 @@ post '/contacts' do
   f.write "client email: #{@client_email}\nmessage:\n#{@client_message}\n"
   f.close
 
-  # where_user_came_from = session[:previous_url] || '/'
-  redirect to '/'
+  smtp_info =
+    begin
+      YAML.load_file("./smtpinfo.yml")
+    rescue
+      @error = "Error: Could not find SMTP info. Please contact the site administrator."
+      return erb :contacts
+    end
+
+
+  Pony.options = {
+  :subject => "art inquiry from #{@client_email}",
+  :body => "#{@client_message}",
+  :via => :smtp,
+  :via_options => {
+    :address              => 'smtp.gmail.com',
+    :port                 => '587',
+    :enable_starttls_auto => true,
+    :user_name            => smtp_info[:username],
+    :password             => smtp_info[:password],
+    :authentication       => :plain, # :plain, :login, :cram_md5, no auth by default
+    :domain               => "localhost.localdomain"
+    }
+  }
+
+  Pony.mail(:to => "sergey.login+ruby@gmail.com")
+
+  erb @message = "Your feedback is send. Thanks for contacting to us!"
+  
 end
 
 
