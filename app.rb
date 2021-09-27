@@ -31,7 +31,7 @@ get '/about' do
 end
 
 get '/visit' do
-  @headresser = "Any headresser"
+  @hairdresser = "Any hairdresser"
   erb :visit
 end
 
@@ -49,14 +49,14 @@ get '/sign_up' do
 end
 
 post '/visit' do
-  @headresser = params[:headresser]
+  @hairdresser = params[:hairdresser]
   @client_name = params[:client_name]
   @client_phone = params[:client_phone]
   @date_time = params[:date_time]
   @color = params[:color]
 
-  hh = {:client_name => "You did't enter your name",
-        :client_phone => "You did't enter your phone",
+  hh = {:client_name => "You didn't enter your name",
+        :client_phone => "You didn't enter your phone",
         :date_time => "Wrong date and time"
       }
 
@@ -66,11 +66,11 @@ post '/visit' do
     return erb :visit
   end
   
-  @message = "Dear #{@client_name}, we wait you at #{@date_time}, your color #{@color}, your headresser #{@headresser}."
+  @message = "Dear #{@client_name}, we wait you at #{@date_time}, your color #{@color}, your hairdresser #{@hairdresser}."
 
 
   f = File.open './public/users.txt', 'a'
-  f.write "headresser: #{@headresser}, client: #{@client_name}, phone: #{@client_phone}, date and time: #{@date_time}, color: #{@color}.\n"
+  f.write "hairdresser: #{@hairdresser}, client: #{@client_name}, phone: #{@client_phone}, date and time: #{@date_time}, color: #{@color}.\n"
   f.close
 
   # where_user_came_from = session[:previous_url] || '/'
