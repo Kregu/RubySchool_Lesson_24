@@ -1,6 +1,6 @@
 RubySchool, Lesson 24
 =====================
-Continue to make the Barbershop application on [sinatra-bootstrap](https://github.com/bootstrap-ruby/sinatra-bootstrap)
+Continue to make the Barbershop application on [sinatra-bootstrap](https://github.com/bootstrap-ruby/sinatra-bootstrap).
 
 (add validation to visit page data)
 
